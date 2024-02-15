@@ -1,0 +1,21 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const student_controller_1 = require("../Controller/student.controller");
+const Authorization_middleware_1 = require("../Middlewares/Authorization.middleware");
+const multer_middleware_1 = require("../Middlewares/multer.middleware");
+const router = (0, express_1.Router)();
+router.get("/", Authorization_middleware_1.AuthenticateUser, student_controller_1.getAllStudents);
+router.post("/register", Authorization_middleware_1.AuthenticateUser, student_controller_1.registerStudent);
+router.post("/edit/:id", Authorization_middleware_1.AuthenticateUser, student_controller_1.editStudent);
+router.delete("/delete/:id", Authorization_middleware_1.AuthenticateUser, student_controller_1.deleteStudent);
+router.post("/verify", student_controller_1.verifyStudent);
+router.post("/verifyOTP", student_controller_1.verifyOTP);
+router.post("/newPassword", student_controller_1.newPassword);
+router.post("/login", student_controller_1.processLogin);
+router.post("/forgotPassword", student_controller_1.sendOTPPRESET);
+router.post("/passwordChange", student_controller_1.newPasswordReq);
+router.post("/settings/password", Authorization_middleware_1.AuthenticateUser, multer_middleware_1.upload.single("photo"), student_controller_1.StudentPassAvatarChange);
+router.post("/profile/update", Authorization_middleware_1.AuthenticateUser, multer_middleware_1.upload.single("photo"), student_controller_1.userProfilePicUpdate);
+exports.default = router;
+//# sourceMappingURL=student.route.js.map
